@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>playlist submission form</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      color: #111;
+    }
+
+    .form-shell {
+      max-width: 1100px;
+    }
+
+    .top-row {
+      display: grid;
+      grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+      gap: 12px 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      grid-column: 2 / 5;
+      margin: 0;
+      font-size: 48px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .dancer-controls {
+      grid-column: 5;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .dancer-controls label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .dancer-controls select,
+    .dancer-controls input {
+      width: 220px;
+      max-width: 100%;
+    }
+
+    .songs-heading {
+      margin: 0 0 12px 56px;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    .songs-section {
+      max-width: 1100px;
+      margin-bottom: 24px;
+    }
+
+    .songs-header {
+      display: grid;
+      grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+      gap: 12px 16px;
+      margin-bottom: 12px;
+      align-items: end;
+    }
+
+    .songs-header h3 {
+      margin: 0;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .pair-row {
+      display: grid;
+      grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+      gap: 12px 16px;
+      align-items: stretch;
+      margin-bottom: 12px;
+    }
+
+    .pair-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pair-box {
+      grid-column: 2 / 6;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px 16px;
+      padding: 8px;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .pair-box.active {
+      border-color: #000;
+    }
+
+    input,
+    select,
+    button,
+    textarea {
+      font: inherit;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .secondary-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    button {
+      cursor: pointer;
+      min-width: 140px;
+    }
+
+    .custom-dancer-row {
+      display: none;
+      margin: 16px 0 0 56px;
+      max-width: 300px;
+    }
+
+    .custom-dancer-row.active {
+      display: block;
+    }
+
+    .status {
+      margin: 16px 0 0 56px;
+      min-height: 24px;
+      font-size: 14px;
+    }
+
+    .status.error {
+      color: #b00020;
+    }
+
+    .status.success {
+      color: #0a6b1a;
+    }
+
+    .helper {
+      margin: 12px 0 0 56px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    @media (max-width: 900px) {
+      .top-row {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title,
+      .dancer-controls {
+        grid-column: auto;
+      }
+
+      .page-title {
+        font-size: 36px;
+      }
+
+      .dancer-controls {
+        justify-content: flex-start;
+      }
+
+      .songs-heading,
+      .helper,
+      .status,
+      .custom-dancer-row {
+        margin-left: 0;
+      }
+
+      .songs-header,
+      .pair-row {
+        grid-template-columns: 32px 1fr;
+      }
+
+      .songs-header h3:nth-child(n+3) {
+        display: none;
+      }
+
+      .pair-box {
+        grid-column: 2;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-shell">
+    <form id="playlistForm">
+      <div class="top-row">
+        <h1 class="page-title">PLAYLIST SUBMISSION FORM</h1>
+
+        <div class="dancer-controls">
+          <label for="dancer">dancer:</label>
+          <select id="dancer" aria-label="dancer" required>
+            <option value="Abigail">Abigail</option>
+            <option value="Adriana">Adriana</option>
+            <option value="Aika">Aika</option>
+            <option value="Akira">Akira</option>
+            <option value="Alice">Alice</option>
+            <option value="Alyna">Alyna</option>
+            <option value="Amelia">Amelia</option>
+            <option value="Amiri">Amiri</option>
+            <option value="Amy">Amy</option>
+            <option value="Angel">Angel</option>
+            <option value="Anna">Anna</option>
+            <option value="Arabella">Arabella</option>
+            <option value="Aubrey">Aubrey</option>
+            <option value="Austin Lee">Austin Lee</option>
+            <option value="Ava">Ava</option>
+            <option value="Azul">Azul</option>
+            <option value="Bailey">Bailey</option>
+            <option value="Bambi">Bambi</option>
+            <option value="Barbie">Barbie</option>
+            <option value="Beautiful">Beautiful</option>
+            <option value="Blair">Blair</option>
+            <option value="Blaze">Blaze</option>
+            <option value="Blu Marie">Blu Marie</option>
+            <option value="Bowie">Bowie</option>
+            <option value="Brenda">Brenda</option>
+            <option value="Britney">Britney</option>
+            <option value="Brooklyn">Brooklyn</option>
+            <option value="Bunny">Bunny</option>
+            <option value="Butterfly">Butterfly</option>
+            <option value="Camay">Camay</option>
+            <option value="Candace">Candace</option>
+            <option value="Cassie">Cassie</option>
+            <option value="Catalina">Catalina</option>
+            <option value="Celeste">Celeste</option>
+            <option value="Chanel">Chanel</option>
+            <option value="Charm">Charm</option>
+            <option value="Chastity">Chastity</option>
+            <option value="Cherry">Cherry</option>
+            <option value="Clover">Clover</option>
+            <option value="Coco">Coco</option>
+            <option value="Cosmic">Cosmic</option>
+            <option value="D&#x27;Vora">D&#x27;Vora</option>
+            <option value="Daisy">Daisy</option>
+            <option value="Dakota">Dakota</option>
+            <option value="Delilah">Delilah</option>
+            <option value="Dani">Dani</option>
+            <option value="Desire">Desire</option>
+            <option value="Diamond">Diamond</option>
+            <option value="Dianara">Dianara</option>
+            <option value="Dream">Dream</option>
+            <option value="Elle">Elle</option>
+            <option value="Erika">Erika</option>
+            <option value="Eve">Eve</option>
+            <option value="Fawn">Fawn</option>
+            <option value="Genesis">Genesis</option>
+            <option value="Gina">Gina</option>
+            <option value="Golden">Golden</option>
+            <option value="Grace">Grace</option>
+            <option value="Happy">Happy</option>
+            <option value="Harmony">Harmony</option>
+            <option value="Hazel">Hazel</option>
+            <option value="Honey">Honey</option>
+            <option value="Isabella">Isabella</option>
+            <option value="Ivory">Ivory</option>
+            <option value="Ivy">Ivy</option>
+            <option value="Jade">Jade</option>
+            <option value="Jazz">Jazz</option>
+            <option value="Jolene">Jolene</option>
+            <option value="Josie">Josie</option>
+            <option value="Jules">Jules</option>
+            <option value="Julia">Julia</option>
+            <option value="Kalani">Kalani</option>
+            <option value="Kapri">Kapri</option>
+            <option value="Karma">Karma</option>
+            <option value="Katrina">Katrina</option>
+            <option value="Kennedy">Kennedy</option>
+            <option value="Kim">Kim</option>
+            <option value="Kira">Kira</option>
+            <option value="Lalita">Lalita</option>
+            <option value="Lana">Lana</option>
+            <option value="Lareina">Lareina</option>
+            <option value="Layla">Layla</option>
+            <option value="Lea">Lea</option>
+            <option value="Lilly">Lilly</option>
+            <option value="Lolli">Lolli</option>
+            <option value="London">London</option>
+            <option value="Lorna">Lorna</option>
+            <option value="Lovely">Lovely</option>
+            <option value="Lux">Lux</option>
+            <option value="Mackenzie">Mackenzie</option>
+            <option value="Mailene">Mailene</option>
+            <option value="Mala">Mala</option>
+            <option value="Mami">Mami</option>
+            <option value="Marceline">Marceline</option>
+            <option value="Mariana">Mariana</option>
+            <option value="Marie">Marie</option>
+            <option value="Medusa">Medusa</option>
+            <option value="Memphis">Memphis</option>
+            <option value="MidnightSnack">MidnightSnack</option>
+            <option value="Mika">Mika</option>
+            <option value="Mimi">Mimi</option>
+            <option value="Misty">Misty</option>
+            <option value="Mona">Mona</option>
+            <option value="Monroe">Monroe</option>
+            <option value="Ms Mayhem">Ms Mayhem</option>
+            <option value="Naomi">Naomi</option>
+            <option value="Natalia">Natalia</option>
+            <option value="Natasha">Natasha</option>
+            <option value="Nelly">Nelly</option>
+            <option value="Nicole">Nicole</option>
+            <option value="Olive">Olive</option>
+            <option value="Paris">Paris</option>
+            <option value="Patience">Patience</option>
+            <option value="Phoenix">Phoenix</option>
+            <option value="Piper">Piper</option>
+            <option value="Pola">Pola</option>
+            <option value="Prodigy">Prodigy</option>
+            <option value="Promise">Promise</option>
+            <option value="Queen">Queen</option>
+            <option value="Raven">Raven</option>
+            <option value="Reagan">Reagan</option>
+            <option value="Reina">Reina</option>
+            <option value="Remi">Remi</option>
+            <option value="Renee">Renee</option>
+            <option value="Riah">Riah</option>
+            <option value="Rome">Rome</option>
+            <option value="Rose">Rose</option>
+            <option value="Rosemary">Rosemary</option>
+            <option value="Roxy">Roxy</option>
+            <option value="Royal">Royal</option>
+            <option value="Sage">Sage</option>
+            <option value="Santana">Santana</option>
+            <option value="Saraya">Saraya</option>
+            <option value="Sasha">Sasha</option>
+            <option value="Saturn">Saturn</option>
+            <option value="Scarlett">Scarlett</option>
+            <option value="Selena">Selena</option>
+            <option value="Sevyn">Sevyn</option>
+            <option value="Shelby">Shelby</option>
+            <option value="Shimmer">Shimmer</option>
+            <option value="Snow">Snow</option>
+            <option value="Sokie">Sokie</option>
+            <option value="Solana">Solana</option>
+            <option value="Sophia">Sophia</option>
+            <option value="Spicy">Spicy</option>
+            <option value="Stella">Stella</option>
+            <option value="Summer">Summer</option>
+            <option value="Sutra">Sutra</option>
+            <option value="Tatiana">Tatiana</option>
+            <option value="Valentina">Valentina</option>
+            <option value="Valeria">Valeria</option>
+            <option value="Vega">Vega</option>
+            <option value="Velvet">Velvet</option>
+            <option value="Victoria">Victoria</option>
+            <option value="Violet">Violet</option>
+            <option value="Xena">Xena</option>
+            <option value="Zaina">Zaina</option>
+            <option value="Zam">Zam</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 class="songs-heading">songs</h2>
+
+      <div class="songs-section">
+        <div class="songs-header">
+          <h3>SET?</h3>
+          <h3>SONG / TRACK TITLE</h3>
+          <h3>ARTIST(S)</h3>
+          <h3>LINK (SPOTIFY, YOUTUBE, ETC)</h3>
+          <h3>NOTES</h3>
+        </div>
+
+        <div id="pairsContainer"></div>
+
+        <div class="helper">
+          Check the box to mark the two rows in that section as a set.
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="addSongsButton">ADD SONGS</button>
+          <button type="submit" id="submitButton">SUBMIT</button>
+        </div>
+
+        <div class="secondary-row">
+          <button type="button" id="showCustomDancerButton">ADD NEW DANCER NAME</button>
+        </div>
+
+        <div class="custom-dancer-row" id="customDancerRow">
+          <input type="text" id="customDancerName" placeholder="enter dancer name" aria-label="enter dancer name">
+        </div>
+
+        <div class="status" id="statusMessage"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const EMAILJS_PUBLIC_KEY = "S7SvwiymNtnBtmAIW";
+    const EMAILJS_SERVICE_ID = "service_njrv98d";
+    const EMAILJS_TEMPLATE_ID = "template_zufeham";
+
+    const pairsContainer = document.getElementById("pairsContainer");
+    const addSongsButton = document.getElementById("addSongsButton");
+    const showCustomDancerButton = document.getElementById("showCustomDancerButton");
+    const customDancerRow = document.getElementById("customDancerRow");
+    const customDancerName = document.getElementById("customDancerName");
+    const dancerSelect = document.getElementById("dancer");
+    const playlistForm = document.getElementById("playlistForm");
+    const statusMessage = document.getElementById("statusMessage");
+    const submitButton = document.getElementById("submitButton");
+
+    let pairCount = 0;
+    let songCount = 0;
+
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    function setStatus(message, type = "") {
+      statusMessage.textContent = message;
+      statusMessage.className = "status" + (type ? " " + type : "");
+    }
+
+    function createInput(placeholder, ariaLabel, className) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = placeholder;
+      input.setAttribute("aria-label", ariaLabel);
+      input.className = className;
+      return input;
+    }
+
+    function createPairRow() {
+      pairCount += 1;
+
+      const firstSongNumber = songCount + 1;
+      const secondSongNumber = songCount + 2;
+      songCount += 2;
+
+      const pairRow = document.createElement("div");
+      pairRow.className = "pair-row";
+
+      const pairToggle = document.createElement("div");
+      pairToggle.className = "pair-toggle";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.setAttribute("aria-label", `set songs ${firstSongNumber} and ${secondSongNumber}`);
+      pairToggle.appendChild(checkbox);
+
+      const pairBox = document.createElement("div");
+      pairBox.className = "pair-box";
+      pairBox.dataset.songStart = firstSongNumber;
+
+      checkbox.addEventListener("change", () => {
+        pairBox.classList.toggle("active", checkbox.checked);
+      });
+
+      const row1Song = createInput(`song ${firstSongNumber}`, `song ${firstSongNumber}`, "song-input");
+      const row1Artist = createInput(`artist ${firstSongNumber}`, `artist ${firstSongNumber}`, "artist-input");
+      const row1Link = createInput(`link ${firstSongNumber}`, `link ${firstSongNumber}`, "link-input");
+      const row1Notes = createInput(`notes ${firstSongNumber}`, `notes ${firstSongNumber}`, "notes-input");
+
+      const row2Song = createInput(`song ${secondSongNumber}`, `song ${secondSongNumber}`, "song-input");
+      const row2Artist = createInput(`artist ${secondSongNumber}`, `artist ${secondSongNumber}`, "artist-input");
+      const row2Link = createInput(`link ${secondSongNumber}`, `link ${secondSongNumber}`, "link-input");
+      const row2Notes = createInput(`notes ${secondSongNumber}`, `notes ${secondSongNumber}`, "notes-input");
+
+      pairBox.append(
+        row1Song, row1Artist, row1Link, row1Notes,
+        row2Song, row2Artist, row2Link, row2Notes
+      );
+
+      pairRow.append(pairToggle, pairBox);
+      pairsContainer.appendChild(pairRow);
+    }
+
+    function getDancerName() {
+      const customName = customDancerName.value.trim();
+      if (customName) return customName;
+      return dancerSelect.value.trim();
+    }
+
+    function collectPlaylistData() {
+      const pairRows = pairsContainer.querySelectorAll(".pair-row");
+      const entries = [];
+
+      pairRows.forEach((pairRow, pairIndex) => {
+        const checkbox = pairRow.querySelector(".pair-toggle input");
+        const pairBox = pairRow.querySelector(".pair-box");
+        const inputs = pairBox.querySelectorAll("input");
+        const isSet = checkbox.checked;
+
+        const row1 = {
+          song_number: pairIndex * 2 + 1,
+          song: inputs[0].value.trim(),
+          artist: inputs[1].value.trim(),
+          link: inputs[2].value.trim(),
+          notes: inputs[3].value.trim()
+        };
+
+        const row2 = {
+          song_number: pairIndex * 2 + 2,
+          song: inputs[4].value.trim(),
+          artist: inputs[5].value.trim(),
+          link: inputs[6].value.trim(),
+          notes: inputs[7].value.trim()
+        };
+
+        if (row1.song || row1.artist || row1.link || row1.notes) {
+          row1.set_with_next = isSet;
+          entries.push(row1);
+        }
+
+        if (row2.song || row2.artist || row2.link || row2.notes) {
+          row2.set_with_previous = isSet;
+          entries.push(row2);
+        }
+      });
+
+      return entries;
+    }
+
+    function formatPlaylist(entries) {
+      if (!entries.length) return "No songs entered.";
+
+      return entries.map((entry) => {
+        const lines = [];
+        lines.push(`Song #${entry.song_number}`);
+        lines.push(`Title: ${entry.song || ""}`);
+        lines.push(`Artist: ${entry.artist || ""}`);
+        lines.push(`Link: ${entry.link || ""}`);
+        lines.push(`Notes: ${entry.notes || ""}`);
+
+        if (entry.set_with_next) {
+          lines.push("Set: Starts a 2-song set with the next row");
+        }
+
+        if (entry.set_with_previous) {
+          lines.push("Set: Second song in a 2-song set");
+        }
+
+        return lines.join("\n");
+      }).join("\n\n------------------------------\n\n");
+    }
+
+    showCustomDancerButton.addEventListener("click", () => {
+      customDancerRow.classList.toggle("active");
+      if (customDancerRow.classList.contains("active")) {
+        customDancerName.focus();
+      }
+    });
+
+    addSongsButton.addEventListener("click", () => {
+      createPairRow();
+      setStatus("");
+    });
+
+    playlistForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const dancerName = getDancerName();
+      const entries = collectPlaylistData();
+
+      if (!dancerName) {
+        setStatus("Enter or select a dancer name.", "error");
+        return;
+      }
+
+      if (!entries.length) {
+        setStatus("Enter at least one song before submitting.", "error");
+        return;
+      }
+
+      const subject = `Pacers playlist submission from ${dancerName}`;
+      const playlistText = formatPlaylist(entries);
+
+      submitButton.disabled = true;
+      setStatus("Sending...", "");
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: "havokmega@gmail.com",
+          subject: subject,
+          dancer: dancerName,
+          dancer_name: dancerName,
+          songs: playlistText,
+          playlist_text: playlistText,
+          submitted_at: new Date().toLocaleString(),
+          song_count: entries.length
+        });
+
+        setStatus("Playlist sent.", "success");
+        playlistForm.reset();
+        customDancerRow.classList.remove("active");
+        pairsContainer.innerHTML = "";
+        pairCount = 0;
+        songCount = 0;
+
+        for (let i = 0; i < 5; i += 1) {
+          createPairRow();
+        }
+      } catch (error) {
+        console.error(error);
+        const message = error && error.text ? error.text : "Submit failed. Check your EmailJS service ID, template ID, and template variables.";
+        setStatus(message, "error");
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+
+    for (let i = 0; i < 5; i += 1) {
+      createPairRow();
+    }
+  </script>
+</body>
+</html>
