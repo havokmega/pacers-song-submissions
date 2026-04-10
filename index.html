@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       margin: 40px;
       color: #111;
+      background: #E6D7FE;
     }
 
     .form-shell {
@@ -53,13 +54,40 @@
       max-width: 100%;
     }
 
+    .request-type-section {
+      margin: 0 0 24px 56px;
+    }
+
+    .request-type-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .request-type-options {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .request-type-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
     .songs-heading {
       margin: 0 0 12px 56px;
       font-size: 32px;
       line-height: 1.1;
     }
 
-    .songs-section {
+    .songs-section,
+    .genres-section,
+    .dj-choice-section {
       max-width: 1100px;
       margin-bottom: 24px;
     }
@@ -95,8 +123,8 @@
     .pair-box {
       grid-column: 2 / 6;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px 16px;
+      grid-template-columns: 1fr;
+      gap: 12px;
       padding: 8px;
       border: 2px solid transparent;
       border-radius: 6px;
@@ -107,6 +135,32 @@
       border-color: #000;
     }
 
+    .song-card {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px 16px;
+      align-items: start;
+    }
+
+    .song-card-title {
+      display: none;
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .set-select-row {
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    .set-select-row label {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+    }
+
     input,
     select,
     button,
@@ -114,6 +168,16 @@
       font: inherit;
       padding: 8px;
       box-sizing: border-box;
+      border: 1px solid #888;
+      border-radius: 4px;
+      background: #fff;
+      color: #111;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #555;
+      opacity: 1;
     }
 
     .button-row {
@@ -133,6 +197,7 @@
     button {
       cursor: pointer;
       min-width: 140px;
+      background: #fff;
     }
 
     .custom-dancer-row {
@@ -165,7 +230,53 @@
       color: #444;
     }
 
+    .genres-section,
+    .dj-choice-section {
+      margin-left: 56px;
+      display: none;
+    }
+
+    .genres-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin-top: 12px;
+      max-width: 900px;
+    }
+
+    .genre-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(255,255,255,0.55);
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+
+    .other-genre-row {
+      margin-top: 16px;
+      max-width: 320px;
+    }
+
+    .dj-choice-message {
+      margin: 12px 0 0;
+      font-size: 16px;
+      line-height: 1.5;
+      background: rgba(255,255,255,0.55);
+      padding: 14px 16px;
+      border-radius: 6px;
+      max-width: 700px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
     @media (max-width: 900px) {
+      body {
+        margin: 20px;
+      }
+
       .top-row {
         grid-template-columns: 1fr;
       }
@@ -183,24 +294,82 @@
         justify-content: flex-start;
       }
 
+      .request-type-section,
       .songs-heading,
       .helper,
       .status,
-      .custom-dancer-row {
+      .custom-dancer-row,
+      .genres-section,
+      .dj-choice-section {
         margin-left: 0;
       }
 
-      .songs-header,
-      .pair-row {
-        grid-template-columns: 32px 1fr;
+      .request-type-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
 
-      .songs-header h3:nth-child(n+3) {
+      .songs-heading {
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .songs-header {
+        display: none;
+      }
+
+      .pair-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 18px;
+      }
+
+      .pair-toggle {
         display: none;
       }
 
       .pair-box {
-        grid-column: 2;
+        grid-column: auto;
+        padding: 0;
+        border: none;
+        gap: 12px;
+      }
+
+      .pair-box.mobile-set-yes {
+        border: 2px solid #000;
+        padding: 12px;
+        background: rgba(255,255,255,0.45);
+      }
+
+      .song-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        border: 2px solid #000;
+        padding: 12px;
+        background: rgba(255,255,255,0.45);
+      }
+
+      .pair-box.mobile-set-yes .song-card {
+        border: none;
+        padding: 0;
+        background: transparent;
+      }
+
+      .song-card-title {
+        display: block;
+      }
+
+      .set-select-row {
+        display: block;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #c40000;
+      }
+
+      .genres-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -215,7 +384,7 @@
         <div class="dancer-controls">
           <label for="dancer">dancer:</label>
           <select id="dancer" aria-label="dancer" required>
-            <option value="Abigail">Abigail</option>
+<option value="Abigail">Abigail</option>
             <option value="Adriana">Adriana</option>
             <option value="Aika">Aika</option>
             <option value="Akira">Akira</option>
@@ -377,38 +546,84 @@
         </div>
       </div>
 
+      <div class="request-type-section">
+        <div class="request-type-title">request type</div>
+        <div class="request-type-options">
+          <label><input type="radio" name="requestType" value="songs" checked> <span>I want to pick songs</span></label>
+          <label><input type="radio" name="requestType" value="genres"> <span>genres</span></label>
+          <label><input type="radio" name="requestType" value="dj"> <span>Play to the crowd, let the DJ choose</span></label>
+        </div>
+      </div>
+
       <h2 class="songs-heading">songs</h2>
 
-      <div class="songs-section">
+      <div class="songs-section" id="songsSection">
         <div class="songs-header">
           <h3>SET?</h3>
           <h3>SONG / TRACK TITLE</h3>
           <h3>ARTIST(S)</h3>
-          <h3>LINK (SPOTIFY, YOUTUBE, ETC)</h3>
-          <h3>NOTES</h3>
+          <h3>LINK (SPOTIFY, YOUTUBE, ETC) (OPTIONAL)</h3>
+          <h3>NOTES (OPTIONAL)</h3>
         </div>
 
         <div id="pairsContainer"></div>
 
-        <div class="helper">
+        <div class="helper" id="songsHelper">
           Check the box to mark the two rows in that section as a set.
         </div>
-
-        <div class="button-row">
-          <button type="button" id="addSongsButton">ADD SONGS</button>
-          <button type="submit" id="submitButton">SUBMIT</button>
-        </div>
-
-        <div class="secondary-row">
-          <button type="button" id="showCustomDancerButton">ADD NEW DANCER NAME</button>
-        </div>
-
-        <div class="custom-dancer-row" id="customDancerRow">
-          <input type="text" id="customDancerName" placeholder="enter dancer name" aria-label="enter dancer name">
-        </div>
-
-        <div class="status" id="statusMessage"></div>
       </div>
+
+      <div class="genres-section" id="genresSection">
+        <div class="request-type-title">genres</div>
+        <div class="genres-grid">
+              <label class="genre-option"><input type="checkbox" name="genres" value="Hip-Hop/Rap - Current"> <span>Hip-Hop/Rap - Current</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Hip-Hop/Rap - 2000's"> <span>Hip-Hop/Rap - 2000's</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Hip Hop/Rap - 1990's"> <span>Hip Hop/Rap - 1990's</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="R&B - Current"> <span>R&B - Current</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="R&B - Throwback"> <span>R&B - Throwback</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Rock"> <span>Rock</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Metal"> <span>Metal</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Classic Rock"> <span>Classic Rock</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Latin / Reggaeton"> <span>Latin / Reggaeton</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Reggae / Dancehall"> <span>Reggae / Dancehall</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Dance / Pop"> <span>Dance / Pop</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Goth"> <span>Goth</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Country"> <span>Country</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Seductive Chill (Downtempo)"> <span>Seductive Chill (Downtempo)</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Burlesque"> <span>Burlesque</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="EDM House"> <span>EDM House</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="EDM Electro"> <span>EDM Electro</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="EDM Dubstep"> <span>EDM Dubstep</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="EDM Trap / Twerk"> <span>EDM Trap / Twerk</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="EDM Drum and Bass"> <span>EDM Drum and Bass</span></label>
+              <label class="genre-option"><input type="checkbox" name="genres" value="Glitch Hop"> <span>Glitch Hop</span></label>
+        </div>
+        <div class="other-genre-row">
+          <input type="text" id="otherGenre" placeholder="Other" aria-label="Other genre">
+        </div>
+      </div>
+
+      <div class="dj-choice-section" id="djChoiceSection">
+        <div class="request-type-title">dj choice</div>
+        <div class="dj-choice-message">
+          We've got it covered. Please click "Submit" so your preference has been accounted for.
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="addSongsButton">ADD SONGS</button>
+        <button type="submit" id="submitButton">SUBMIT</button>
+      </div>
+
+      <div class="secondary-row">
+        <button type="button" id="showCustomDancerButton">ADD NEW DANCER NAME</button>
+      </div>
+
+      <div class="custom-dancer-row" id="customDancerRow">
+        <input type="text" id="customDancerName" placeholder="enter dancer name" aria-label="enter dancer name">
+      </div>
+
+      <div class="status" id="statusMessage"></div>
     </form>
   </div>
 
@@ -426,6 +641,11 @@
     const playlistForm = document.getElementById("playlistForm");
     const statusMessage = document.getElementById("statusMessage");
     const submitButton = document.getElementById("submitButton");
+    const songsSection = document.getElementById("songsSection");
+    const genresSection = document.getElementById("genresSection");
+    const djChoiceSection = document.getElementById("djChoiceSection");
+    const songsHeading = document.querySelector(".songs-heading");
+    const requestTypeInputs = document.querySelectorAll('input[name="requestType"]');
 
     let pairCount = 0;
     let songCount = 0;
@@ -446,11 +666,77 @@
       return input;
     }
 
+    function updatePairBoxState(pairRow) {
+      const checkbox = pairRow.querySelector(".desktop-set-checkbox");
+      const select = pairRow.querySelector(".mobile-set-select");
+      const pairBox = pairRow.querySelector(".pair-box");
+      const secondCard = pairRow.querySelector(".song-card.second");
+      const isSet = checkbox.checked;
+
+      checkbox.checked = isSet;
+      select.value = isSet ? "yes" : "no";
+      pairBox.classList.toggle("active", isSet);
+      pairBox.classList.toggle("mobile-set-yes", isSet);
+
+      if (window.innerWidth <= 900) {
+        secondCard.classList.toggle("hidden", !isSet);
+      } else {
+        secondCard.classList.remove("hidden");
+      }
+    }
+
+    function createSongCard(songNumber, isFirstInPair) {
+      const songCard = document.createElement("div");
+      songCard.className = "song-card " + (isFirstInPair ? "first" : "second");
+
+      const title = document.createElement("div");
+      title.className = "song-card-title";
+      title.textContent = "Song # " + songNumber;
+      songCard.appendChild(title);
+
+      if (isFirstInPair) {
+        const setRow = document.createElement("div");
+        setRow.className = "set-select-row";
+        setRow.innerHTML = `
+          <label>Part of a set?</label>
+          <select class="mobile-set-select" aria-label="Part of a set for song ` + songNumber + `">
+            <option value="no" selected>No</option>
+            <option value="yes">Yes</option>
+          </select>
+        `;
+        songCard.appendChild(setRow);
+      }
+
+      songCard.appendChild(createInput("song " + songNumber, "song " + songNumber, "song-input"));
+      songCard.appendChild(createInput("artist " + songNumber, "artist " + songNumber, "artist-input"));
+      songCard.appendChild(createInput("link (optional)", "link " + songNumber, "link-input"));
+      songCard.appendChild(createInput("notes (optional)", "notes " + songNumber, "notes-input"));
+
+      return songCard;
+    }
+
+    function refreshSongLabels() {
+      let visibleSongNumber = 1;
+      const pairRows = pairsContainer.querySelectorAll(".pair-row");
+
+      pairRows.forEach((pairRow) => {
+        const firstTitle = pairRow.querySelector(".song-card.first .song-card-title");
+        const secondTitle = pairRow.querySelector(".song-card.second .song-card-title");
+        const checkbox = pairRow.querySelector(".desktop-set-checkbox");
+        const isSet = checkbox.checked;
+
+        firstTitle.textContent = "Song # " + visibleSongNumber;
+        visibleSongNumber += 1;
+
+        secondTitle.textContent = "Song # " + visibleSongNumber;
+        if (isSet) {
+          visibleSongNumber += 1;
+        }
+      });
+    }
+
     function createPairRow() {
       pairCount += 1;
-
-      const firstSongNumber = songCount + 1;
-      const secondSongNumber = songCount + 2;
       songCount += 2;
 
       const pairRow = document.createElement("div");
@@ -461,34 +747,34 @@
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.setAttribute("aria-label", `set songs ${firstSongNumber} and ${secondSongNumber}`);
+      checkbox.className = "desktop-set-checkbox";
+      checkbox.setAttribute("aria-label", "set section " + pairCount);
       pairToggle.appendChild(checkbox);
 
       const pairBox = document.createElement("div");
       pairBox.className = "pair-box";
-      pairBox.dataset.songStart = firstSongNumber;
 
-      checkbox.addEventListener("change", () => {
-        pairBox.classList.toggle("active", checkbox.checked);
-      });
-
-      const row1Song = createInput(`song ${firstSongNumber}`, `song ${firstSongNumber}`, "song-input");
-      const row1Artist = createInput(`artist ${firstSongNumber}`, `artist ${firstSongNumber}`, "artist-input");
-      const row1Link = createInput(`link ${firstSongNumber}`, `link ${firstSongNumber}`, "link-input");
-      const row1Notes = createInput(`notes ${firstSongNumber}`, `notes ${firstSongNumber}`, "notes-input");
-
-      const row2Song = createInput(`song ${secondSongNumber}`, `song ${secondSongNumber}`, "song-input");
-      const row2Artist = createInput(`artist ${secondSongNumber}`, `artist ${secondSongNumber}`, "artist-input");
-      const row2Link = createInput(`link ${secondSongNumber}`, `link ${secondSongNumber}`, "link-input");
-      const row2Notes = createInput(`notes ${secondSongNumber}`, `notes ${secondSongNumber}`, "notes-input");
-
-      pairBox.append(
-        row1Song, row1Artist, row1Link, row1Notes,
-        row2Song, row2Artist, row2Link, row2Notes
-      );
-
+      const firstCard = createSongCard(songCount - 1, true);
+      const secondCard = createSongCard(songCount, false);
+      pairBox.append(firstCard, secondCard);
       pairRow.append(pairToggle, pairBox);
       pairsContainer.appendChild(pairRow);
+
+      const mobileSelect = pairRow.querySelector(".mobile-set-select");
+
+      checkbox.addEventListener("change", () => {
+        updatePairBoxState(pairRow);
+        refreshSongLabels();
+      });
+
+      mobileSelect.addEventListener("change", () => {
+        checkbox.checked = mobileSelect.value === "yes";
+        updatePairBoxState(pairRow);
+        refreshSongLabels();
+      });
+
+      updatePairBoxState(pairRow);
+      refreshSongLabels();
     }
 
     function getDancerName() {
@@ -497,30 +783,27 @@
       return dancerSelect.value.trim();
     }
 
+    function getRequestType() {
+      const checked = document.querySelector('input[name="requestType"]:checked');
+      return checked ? checked.value : "songs";
+    }
+
     function collectPlaylistData() {
       const pairRows = pairsContainer.querySelectorAll(".pair-row");
       const entries = [];
+      let visibleSongNumber = 1;
 
-      pairRows.forEach((pairRow, pairIndex) => {
-        const checkbox = pairRow.querySelector(".pair-toggle input");
-        const pairBox = pairRow.querySelector(".pair-box");
-        const inputs = pairBox.querySelectorAll("input");
+      pairRows.forEach((pairRow) => {
+        const checkbox = pairRow.querySelector(".desktop-set-checkbox");
+        const inputs = pairRow.querySelectorAll(".song-card input[type='text']");
         const isSet = checkbox.checked;
 
         const row1 = {
-          song_number: pairIndex * 2 + 1,
+          song_number: visibleSongNumber,
           song: inputs[0].value.trim(),
           artist: inputs[1].value.trim(),
           link: inputs[2].value.trim(),
           notes: inputs[3].value.trim()
-        };
-
-        const row2 = {
-          song_number: pairIndex * 2 + 2,
-          song: inputs[4].value.trim(),
-          artist: inputs[5].value.trim(),
-          link: inputs[6].value.trim(),
-          notes: inputs[7].value.trim()
         };
 
         if (row1.song || row1.artist || row1.link || row1.notes) {
@@ -528,13 +811,36 @@
           entries.push(row1);
         }
 
-        if (row2.song || row2.artist || row2.link || row2.notes) {
-          row2.set_with_previous = isSet;
+        visibleSongNumber += 1;
+
+        const row2 = {
+          song_number: visibleSongNumber,
+          song: inputs[4].value.trim(),
+          artist: inputs[5].value.trim(),
+          link: inputs[6].value.trim(),
+          notes: inputs[7].value.trim()
+        };
+
+        if (isSet && (row2.song || row2.artist || row2.link || row2.notes)) {
+          row2.set_with_previous = true;
           entries.push(row2);
+        }
+
+        if (isSet) {
+          visibleSongNumber += 1;
         }
       });
 
       return entries;
+    }
+
+    function validateSongs(entries) {
+      for (const entry of entries) {
+        if (entry.song && !entry.artist) {
+          return "Artist is required for Song #" + entry.song_number + ".";
+        }
+      }
+      return "";
     }
 
     function formatPlaylist(entries) {
@@ -542,11 +848,11 @@
 
       return entries.map((entry) => {
         const lines = [];
-        lines.push(`Song #${entry.song_number}`);
-        lines.push(`Title: ${entry.song || ""}`);
-        lines.push(`Artist: ${entry.artist || ""}`);
-        lines.push(`Link: ${entry.link || ""}`);
-        lines.push(`Notes: ${entry.notes || ""}`);
+        lines.push("Song #" + entry.song_number);
+        lines.push("Title: " + (entry.song || ""));
+        lines.push("Artist: " + (entry.artist || ""));
+        lines.push("Link: " + (entry.link || ""));
+        lines.push("Notes: " + (entry.notes || ""));
 
         if (entry.set_with_next) {
           lines.push("Set: Starts a 2-song set with the next row");
@@ -558,6 +864,29 @@
 
         return lines.join("\n");
       }).join("\n\n------------------------------\n\n");
+    }
+
+    function getGenresData() {
+      const selected = Array.from(document.querySelectorAll('input[name="genres"]:checked')).map((input) => input.value);
+      const other = document.getElementById("otherGenre").value.trim();
+      if (other) {
+        selected.push("Other: " + other);
+      }
+      return selected;
+    }
+
+    function updateModeUI() {
+      const requestType = getRequestType();
+      const songsMode = requestType === "songs";
+      const genresMode = requestType === "genres";
+      const djMode = requestType === "dj";
+
+      songsHeading.classList.toggle("hidden", !songsMode);
+      songsSection.style.display = songsMode ? "block" : "none";
+      genresSection.style.display = genresMode ? "block" : "block";
+      djChoiceSection.style.display = djMode ? "block" : "none";
+      genresSection.style.display = genresMode ? "block" : "none";
+      addSongsButton.style.display = songsMode ? "inline-block" : "none";
     }
 
     showCustomDancerButton.addEventListener("click", () => {
@@ -572,24 +901,74 @@
       setStatus("");
     });
 
+    requestTypeInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        updateModeUI();
+        setStatus("");
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      document.querySelectorAll(".pair-row").forEach(updatePairBoxState);
+    });
+
+    function resetSongRows() {
+      pairsContainer.innerHTML = "";
+      pairCount = 0;
+      songCount = 0;
+      for (let i = 0; i < 5; i += 1) {
+        createPairRow();
+      }
+    }
+
     playlistForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const dancerName = getDancerName();
-      const entries = collectPlaylistData();
+      const requestType = getRequestType();
 
       if (!dancerName) {
         setStatus("Enter or select a dancer name.", "error");
         return;
       }
 
-      if (!entries.length) {
-        setStatus("Enter at least one song before submitting.", "error");
-        return;
+      let subject = "Pacers playlist submission from " + dancerName;
+      let messageBody = "";
+      let songCountForEmail = 0;
+
+      if (requestType === "songs") {
+        const entries = collectPlaylistData();
+
+        if (!entries.length) {
+          setStatus("Enter at least one song before submitting.", "error");
+          return;
+        }
+
+        const artistValidationMessage = validateSongs(entries);
+        if (artistValidationMessage) {
+          setStatus(artistValidationMessage, "error");
+          return;
+        }
+
+        messageBody = "Request type: Pick songs\n\n" + formatPlaylist(entries);
+        songCountForEmail = entries.length;
       }
 
-      const subject = `Pacers playlist submission from ${dancerName}`;
-      const playlistText = formatPlaylist(entries);
+      if (requestType === "genres") {
+        const genres = getGenresData();
+
+        if (!genres.length) {
+          setStatus("Choose at least one genre or enter Other.", "error");
+          return;
+        }
+
+        messageBody = "Request type: Pick genres\n\nGenres:\n" + genres.map((genre) => "- " + genre).join("\n");
+        songCountForEmail = genres.length;
+      }
+
+      if (requestType === "dj") {
+        messageBody = "Request type: Play to the crowd, let the DJ choose\n\nWe've got it covered.";
+      }
 
       submitButton.disabled = true;
       setStatus("Sending...", "");
@@ -600,22 +979,17 @@
           subject: subject,
           dancer: dancerName,
           dancer_name: dancerName,
-          songs: playlistText,
-          playlist_text: playlistText,
+          songs: messageBody,
+          playlist_text: messageBody,
           submitted_at: new Date().toLocaleString(),
-          song_count: entries.length
+          song_count: songCountForEmail
         });
 
         setStatus("Playlist sent.", "success");
         playlistForm.reset();
         customDancerRow.classList.remove("active");
-        pairsContainer.innerHTML = "";
-        pairCount = 0;
-        songCount = 0;
-
-        for (let i = 0; i < 5; i += 1) {
-          createPairRow();
-        }
+        resetSongRows();
+        updateModeUI();
       } catch (error) {
         console.error(error);
         const message = error && error.text ? error.text : "Submit failed. Check your EmailJS service ID, template ID, and template variables.";
@@ -625,9 +999,8 @@
       }
     });
 
-    for (let i = 0; i < 5; i += 1) {
-      createPairRow();
-    }
+    resetSongRows();
+    updateModeUI();
   </script>
 </body>
 </html>
